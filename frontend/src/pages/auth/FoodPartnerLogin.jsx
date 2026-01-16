@@ -13,14 +13,18 @@ const FoodPartnerLogin = () => {
     const email = e.target.email.value;
     const password = e.target.password.value;
 
-    const response = await axios.post("http://localhost:3000/api/auth/foodpartner/login", {
-      email,
-      password
-    }, { withCredentials: true });
+    try {
+      const response = await axios.post("http://localhost:3000/api/auth/foodpartner/login", {
+        email,
+        password
+      }, { withCredentials: true });
 
-    console.log(response.data);
-
-    navigate("/home"); // Redirect to home page after login
+      console.log(response.data);
+      navigate("/create-food"); // Redirect to create food page after login
+    } catch (err) {
+      console.error(err);
+      alert(err.response?.data?.message || "Login failed");
+    }
 
   };
 
