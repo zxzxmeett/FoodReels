@@ -44,7 +44,7 @@ const UserLogin = () => {
           <button className="auth-submit" type="submit">Sign In</button>
         </form>
         <div className="auth-alt-action">
-          New here? <a href="/user/register">Create account</a>
+          New here? <a href="/">Create account</a>
         </div>
       </div>
     </div>

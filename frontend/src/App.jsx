@@ -9,7 +9,9 @@ function App() {
 
   return (
     <>
-      <AppRoutes />
+      <div className="app-container">
+        <AppRoutes />
+      </div>
     </>
   )
 }

@@ -1,6 +1,5 @@
 import React, { useEffect, useMemo, useRef, useState } from 'react';
 //import axios from 'axios';
-import API from "../../utils/api";
 import '../../styles/create-food.css';
 import { useNavigate } from 'react-router-dom';
 
@@ -62,7 +61,7 @@ const CreateFood = () => {
         })
 
         console.log(response.data);
-        navigate("/home"); // Redirect to home or another page after successful creation
+        navigate("/"); // Redirect to home or another page after successful creation
         // Optionally reset
         // setName(''); setDescription(''); setVideoFile(null);
     };
