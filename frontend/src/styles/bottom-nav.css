@@ -18,7 +18,7 @@
   margin: 0 auto;
   height: 100%;
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: repeat(3, 1fr);
 }
 
 .bottom-nav__item {
@@ -40,4 +40,20 @@
 /* Safe area for iOS */
 @supports(padding: max(0px)) {
   .bottom-nav { padding-bottom: max(env(safe-area-inset-bottom), 0px); }
+}
+.logout-btn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: #ffffff; /* soft red */
+}
+
+/* hover */
+.logout-btn:hover {
+  color: #ffffff;
+}
+
+/* active press */
+.logout-btn:active {
+  transform: scale(0.95);
 }

@@ -122,3 +122,35 @@ button.auth-submit:focus-visible { outline: 2px solid var(--color-accent-hover);
 
 /* Smooth transitions for theme change */
 body, .auth-card, .field-group input { transition: background 200ms ease, color 200ms ease, border-color 200ms ease; }
+
+.auth-role-btn {
+  display: block;
+  text-align: center;
+  padding: 12px 16px;
+  border-radius: 10px;
+  text-decoration: none;
+  font-weight: 600;
+
+  /* button feel */
+  background: var(--color-surface);
+  color: var(--color-text);
+  border: 2px solid var(--color-border);
+
+  /* depth */
+  box-shadow: 0 3px 0 var(--color-border);
+
+  transition: all 0.15s ease;
+}
+
+/* hover = highlight */
+.auth-role-btn:hover {
+  border-color: var(--color-primary);
+  color: var(--color-primary);
+  box-shadow: 0 4px 0 var(--color-primary);
+}
+
+/* click = pressed effect */
+.auth-role-btn:active {
+  transform: translateY(2px);
+  box-shadow: 0 1px 0 var(--color-border);
+}
