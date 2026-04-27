@@ -2,6 +2,7 @@ import React, { useEffect, useMemo, useRef, useState } from 'react';
 //import axios from 'axios';
 import '../../styles/create-food.css';
 import { useNavigate } from 'react-router-dom';
+import API from '../../utils/api';
 
 const CreateFood = () => {
     const [ name, setName ] = useState('');
@@ -61,7 +62,7 @@ const CreateFood = () => {
         })
 
         console.log(response.data);
-        navigate("/"); // Redirect to home or another page after successful creation
+        navigate("/home"); // Redirect to home or another page after successful creation
         // Optionally reset
         // setName(''); setDescription(''); setVideoFile(null);
     };
