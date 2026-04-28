@@ -6,4 +6,10 @@
  html, body{
   height: 100%;
   width: 100%;
- }
+}
+
+:root {
+  /* This accounts for the 56px bar + the phone's bottom notch area */
+  --nav-total-height: calc(56px + env(safe-area-inset-bottom, 0px));
+  --ui-gap: 20px; /* The specific gap you want between the button and nav */
+}

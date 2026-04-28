@@ -63,6 +63,7 @@
   width: 100%;
   padding: var(--space-6);
   padding-bottom: calc(env(safe-area-inset-bottom, 0) + 72px); /* make space for bottom nav */
+  padding-bottom: calc(var(--nav-total-height) + var(--ui-gap));
   display: flex;
   flex-direction: column;
   padding-right: 4.5rem;
@@ -102,8 +103,18 @@
 .reel-btn:focus-visible { outline: 2px solid #fff; outline-offset: 3px; }
 
 /* Desktop tweaks */
+/* Desktop tweaks */
 @media (min-width: 768px) {
-  .reel-content { padding: 36px; }
+  .reel-content { 
+    /* Keep the side padding at 36px for desktop */
+    padding-left: 36px;
+    padding-right: 36px;
+    padding-top: 36px;
+
+    /* RE-APPLY the bottom padding to ensure the gap stays */
+    padding-bottom: calc(env(safe-area-inset-bottom, 0px) + 72px + 20px); 
+  }
+  
   .reel-description { font-size: 1.05rem; max-width: 70ch; }
 }
 
@@ -111,7 +122,7 @@
 .reel-actions {
   position: absolute;
   right: 10px;
-  bottom: 96px; /* above bottom CTA and nav */
+  bottom: calc(var(--nav-total-height) + var(--ui-gap) + 60px);
   display: flex;
   flex-direction: column;
   gap: 14px;
