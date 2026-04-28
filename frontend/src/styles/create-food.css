@@ -2,7 +2,8 @@
 
 /* Container */
 .create-food-page {
-  min-height: 100dvh;
+  min-height: calc(100vh - 56px);
+  padding-bottom: 70px;
   display: flex;
   align-items: flex-start;
   justify-content: center;

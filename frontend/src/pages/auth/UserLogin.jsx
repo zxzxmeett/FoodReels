@@ -29,8 +29,8 @@ const UserLogin = () => {
     <div className="auth-page-wrapper">
       <div className="auth-card" role="region" aria-labelledby="user-login-title">
         <header>
-          <h1 id="user-login-title" className="auth-title">Welcome back</h1>
-          <p className="auth-subtitle">Sign in to continue your food journey.</p>
+          <h1 id="user-login-title" className="auth-title">User Login</h1>
+          <p className="auth-subtitle">Log in as partner? <a href="/food-partner/login">Click here</a> </p>
         </header>
         <form className="auth-form" onSubmit={handleSubmit} noValidate>
           <div className="field-group">

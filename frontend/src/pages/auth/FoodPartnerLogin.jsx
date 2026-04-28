@@ -39,7 +39,7 @@ const FoodPartnerLogin = () => {
             Partner login
           </h1>
           <p className="auth-subtitle">
-            Access your dashboard and manage orders.
+            Log In as user? <a href="/user/login">Click here</a>
           </p>
         </header>
         <form className="auth-form" onSubmit={handleSubmit} noValidate>
