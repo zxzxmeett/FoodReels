@@ -35,6 +35,7 @@ async function registerUser(req, res) {
     httpOnly: true,
     secure: true, 
     sameSite: "none",
+    partitioned: true,
     maxAge: 24 * 60 * 60 * 1000 
 });
 
@@ -80,6 +81,7 @@ async function loginUser(req, res) {
     httpOnly: true,
     secure: true,
     sameSite: "none",
+    partitioned: true,
     maxAge: 24 * 60 * 60 * 1000
   });
 
@@ -135,6 +137,7 @@ async function registerFoodPartner(req, res) {
     httpOnly: true,
     secure: true,
     sameSite: "none",
+    partitioned: true,
     maxAge: 24 * 60 * 60 * 1000
   });
 
@@ -183,6 +186,7 @@ async function loginFoodPartner(req, res) {
     httpOnly: true,
     secure: true,
     sameSite: "none",
+    partitioned: true,
     maxAge: 24 * 60 * 60 * 1000
   });;
 
