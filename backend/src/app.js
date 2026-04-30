@@ -10,7 +10,7 @@ const app = express();
 app.use(cookierParser());
 
 app.use(cors({
-    origin: "http://localhost:5173",
+    origin: "https://food-reels-two.vercel.app/",
     credentials: true,
 }));
 
