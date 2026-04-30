@@ -39,7 +39,7 @@ const FoodPartnerLogin = () => {
             Partner login
           </h1>
           <p className="auth-subtitle">
-            Log In as user? <a href="/user/login">Click here</a>
+            Log In as user? <Link to="/user/login">Click here</Link>
           </p>
         </header>
         <form className="auth-form" onSubmit={handleSubmit} noValidate>
@@ -68,7 +68,7 @@ const FoodPartnerLogin = () => {
           </button>
         </form>
         <div className="auth-alt-action">
-          New partner? <a href="/food-partner/register">Create an account</a>
+          New partner? <Link to="/food-partner/register">Create an account</Link>
         </div>
       </div>
     </div>

@@ -30,7 +30,7 @@ const UserLogin = () => {
       <div className="auth-card" role="region" aria-labelledby="user-login-title">
         <header>
           <h1 id="user-login-title" className="auth-title">User Login</h1>
-          <p className="auth-subtitle">Log in as partner? <a href="/food-partner/login">Click here</a> </p>
+          <p className="auth-subtitle">Log in as partner? <Link to="/food-partner/login">Click here</Link> </p>
         </header>
         <form className="auth-form" onSubmit={handleSubmit} noValidate>
           <div className="field-group">
@@ -44,7 +44,7 @@ const UserLogin = () => {
           <button className="auth-submit" type="submit">Sign In</button>
         </form>
         <div className="auth-alt-action">
-          New here? <a href="/">Create account</a>
+          New here? <Link to="/user/register">Create account</Link>
         </div>
       </div>
     </div>
