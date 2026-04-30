@@ -10,7 +10,7 @@ const app = express();
 app.use(cookierParser());
 
 app.use(cors({
-    origin: "https://food-reels-two.vercel.app/",
+    origin: "https://food-reels-two.vercel.app",
     credentials: true,
 }));
 
