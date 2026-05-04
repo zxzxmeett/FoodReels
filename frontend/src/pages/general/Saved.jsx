@@ -1,11 +1,14 @@
 import React, { useEffect, useState } from 'react'
 import '../../styles/reels.css'
+import "../../styles/skeleton.css"
 //import axios from 'axios'
 import API from '../../utils/api'
 import ReelFeed from '../../components/ReelFeed'
+import SkeletonReel from '../../components/SkeletonReel'
 
 const Saved = () => {
-    const [ videos, setVideos ] = useState([])
+    const [videos, setVideos] = useState([])
+    const [loading, setLoading] = useState(true)
 
     useEffect(() => {
         API.get("/api/food/save", { withCredentials: true })
@@ -20,6 +23,10 @@ const Saved = () => {
                     foodPartner: item.food.foodPartner,
                 }))
                 setVideos(savedFoods)
+                setLoading(false)
+            }).catch(err => {
+                console.error("Fetch error:", err)
+                setLoading(false)
             })
     }, [])
 
@@ -30,6 +37,15 @@ const Saved = () => {
         } catch {
             // noop
         }
+    }
+    if (loading) {
+        return (
+            <div className="reels-container">
+                {[...Array(3)].map((_, i) => (
+                    <SkeletonReel key={i} />
+                ))}
+            </div>
+        )
     }
 
     return (
