@@ -1,0 +1,87 @@
+/* Container adjustments */
+.skeleton-reel-wrapper {
+  width: 100%;
+  height: calc(100vh - 70px);
+  background: #000;
+  position: relative;
+  overflow: hidden;
+}
+
+.skeleton-overlay {
+  position: absolute;
+  bottom: 40px; 
+  left: 20px;
+  width: 65%;
+  z-index: 2;
+}
+
+.skeleton-text-line.desc-long { width: 90%; height: 16px; margin-bottom: 8px; }
+.skeleton-text-line.desc-short { width: 60%; height: 16px; margin-bottom: 20px; }
+
+
+.skeleton-button {
+  width: 140px;
+  height: 45px;
+  border-radius: 25px; 
+  background: #333;
+}
+
+/* Sidebar Icons Alignment */
+.skeleton-actions-sidebar {
+  position: absolute;
+  right: 20px;
+  bottom: 120px; 
+  flex-direction: column;
+  gap: 25px;
+  align-items: center;
+}
+
+.skeleton-action-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 5px;
+}
+
+.skeleton-circle.action {
+  width: 45px;
+  height: 45px;
+  opacity: 0.6;
+}
+
+.skeleton-text-mini {
+  width: 15px;
+  height: 10px;
+  background: #333;
+  border-radius: 2px;
+}
+
+.shimmer {
+  background: linear-gradient(90deg, #121212 25%, #222 50%, #121212 75%);
+  background-size: 200% 100%;
+  animation: shimmerPulse 1.8s infinite;
+}
+
+@keyframes shimmerPulse {
+  0% {
+    background-position: 200% 0; 
+  }
+  100% {
+    background-position: -200% 0; 
+  }
+}
+
+.shimmer {
+  background: linear-gradient(
+    90deg, 
+    #1a1a1a 25%, 
+    #2a2a2a 50%, 
+    #1a1a1a 75%  
+  );
+  
+  background-size: 200% 100%; 
+  
+  animation: shimmerPulse 1.8s infinite linear; 
+  
+  background-color: #1a1a1a; 
+}

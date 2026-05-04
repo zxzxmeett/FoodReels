@@ -10,8 +10,23 @@ const app = express();
 app.set("trust proxy", 1);
 app.use(cookierParser());
 
+const allowedOrigins = [
+    "https://food-reels-two.vercel.app", //Live Frontend
+    "http://localhost:5173",             //Frontend (Vite default)
+    "http://localhost:3000"              //Frontend (CRA default)
+];
+
 app.use(cors({
-    origin: "https://food-reels-two.vercel.app",
+    origin: function (origin, callback) {
+        
+        if (!origin) return callback(null, true);
+        
+        if (allowedOrigins.indexOf(origin) !== -1) {
+            callback(null, true);
+        } else {
+            callback(new Error("Not allowed by CORS"));
+        }
+    },
     credentials: true,
 }));
 

@@ -5,6 +5,6 @@ const connectDB = require("./src/DB/db");
 
 connectDB();
 
-app.listen(3000, () => {
-    console.log("Server is running");
+app.listen(5000, () => {
+    console.log("Server is running on 5000");
 });
