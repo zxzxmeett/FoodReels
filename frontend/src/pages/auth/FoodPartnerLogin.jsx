@@ -1,5 +1,7 @@
+import { useState } from "react";
 import React from "react";
 import "../../styles/auth-shared.css";
+import "../../styles/skeleton.css";
 import API from "../../utils/api";
 //import axios from "axios";
 import { useNavigate } from "react-router-dom";
@@ -7,9 +9,11 @@ import { Link } from "react-router-dom";
 
 const FoodPartnerLogin = () => {
   const navigate = useNavigate();
+  const [loading, setLoading] = useState(false);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setLoading(true);
 
     const email = e.target.email.value;
     const password = e.target.password.value;
@@ -21,15 +25,28 @@ const FoodPartnerLogin = () => {
       });
 
       console.log(response.data);
-      navigate("/create-food"); //redirect to create food page after successful login
+      navigate("/create-food");
     } catch (err) {
       console.error(err);
       alert(err.response?.data?.message || "Login failed");
+      setLoading(false);
     }
   };
 
   return (
     <div className="auth-page-wrapper">
+      {loading && (
+        <div className="login-loading-overlay">
+          <div className="loading-content">
+            <h2>Accessing Partner Portal...</h2>
+            <p>Our servers are waking up to fetch your dashboard.</p>
+            <div className="loading-bar-container">
+               <div className="loading-bar-fill shimmer"></div>
+            </div>
+          </div>
+        </div>
+      )}
+
       <div
         className="auth-card"
         role="region"

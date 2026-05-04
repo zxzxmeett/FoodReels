@@ -1,4 +1,4 @@
-import React from "react";
+import React,{ useState } from "react";
 import { Link } from "react-router-dom";
 import "../../styles/auth-shared.css";
 import API from "../../utils/api";
@@ -7,9 +7,11 @@ import { useNavigate } from "react-router-dom";
 
 const FoodPartnerRegister = () => {
   const navigate = useNavigate();
+  const [loading, setLoading] = useState(false);
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    setLoading(true);
 
     const businessName = e.target.businessName.value;
     const contactName = e.target.contactName.value;
@@ -32,11 +34,23 @@ const FoodPartnerRegister = () => {
       })
       .catch((error) => {
         console.error("There was an error registering!", error);
+        setLoading(false);
       });
   };
 
   return (
     <div className="auth-page-wrapper">
+      {loading && (
+                <div className="login-loading-overlay">
+                    <div className="loading-content">
+                        <h2>Setting up your shop...</h2>
+                        <p>Preparing your partner account and analytics.</p>
+                        <div className="loading-bar-container">
+                            <div className="loading-bar-fill shimmer"></div>
+                        </div>
+                    </div>
+                </div>
+            )}
       <div
         className="auth-card"
         role="region"
