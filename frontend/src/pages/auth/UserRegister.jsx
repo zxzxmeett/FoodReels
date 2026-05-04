@@ -1,6 +1,8 @@
 import React from 'react';
+import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import '../../styles/auth-shared.css';
+import '../../styles/skeleton.css';
 import API from "../../utils/api";
 //import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
@@ -8,9 +10,11 @@ import { useNavigate } from 'react-router-dom';
 const UserRegister = () => {
 
     const navigate = useNavigate();
+    const [loading, setLoading] = useState(false);
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+        setLoading(true);
 
         const firstName = e.target.firstName.value;
         const lastName = e.target.lastName.value;
@@ -18,23 +22,40 @@ const UserRegister = () => {
         const password = e.target.password.value;
 
 
-        const response = await API.post("/api/auth/user/register", {
-            fullName: firstName + " " + lastName,
-            email,
-            password
-        },
-        {
-            withCredentials: true
-        })
+        try {
+            const response = await API.post("/api/auth/user/register", {
+                fullName: firstName + " " + lastName,
+                email,
+                password
+            },
+            {
+                withCredentials: true
+            });
 
-        console.log(response.data);
-
-        navigate("/home")
+            console.log(response.data);
+            navigate("/home");
+        } catch (err) {
+            console.error("Registration error:", err);
+            setLoading(false); 
+        }
 
     };
 
     return (
         <div className="auth-page-wrapper">
+            
+            {loading && (
+                <div className="login-loading-overlay">
+                    <div className="loading-content">
+                        <h2>Creating your profile...</h2>
+                        <p>Our servers are preparing your workspace.</p>
+                        <div className="loading-bar-container">
+                            <div className="loading-bar-fill shimmer"></div>
+                        </div>
+                    </div>
+                </div>
+            )}
+
             <div className="auth-card" role="region" aria-labelledby="user-register-title">
                 <header>
                     <h1 id="user-register-title" className="auth-title">Create your account</h1>
