@@ -6,6 +6,7 @@ import API from "../../utils/api";
 //import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
+import { toast } from "react-hot-toast";
 
 const FoodPartnerLogin = () => {
   const navigate = useNavigate();
@@ -17,18 +18,22 @@ const FoodPartnerLogin = () => {
 
     const email = e.target.email.value;
     const password = e.target.password.value;
-
+    const toastId = toast.loading("Checking credentials...");
     try {
       const response = await API.post("/api/auth/foodpartner/login", {
         email,
         password,
       });
-
+      toast.success(`Logged in successfully!`, {
+            id: toastId, 
+        });
       console.log(response.data);
       navigate("/create-food");
     } catch (err) {
+      toast.error("Invalid email or password.", {
+            id: toastId, 
+        });
       console.error(err);
-      alert(err.response?.data?.message || "Login failed");
       setLoading(false);
     }
   };

@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 import '../../styles/auth-shared.css';
 import '../../styles/skeleton.css';
 import API from "../../utils/api";
+import { toast } from 'react-hot-toast';
 //import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 
@@ -33,9 +34,11 @@ const UserRegister = () => {
             });
 
             console.log(response.data);
+            toast.success("Account created successfully!");
             navigate("/home");
         } catch (err) {
             console.error("Registration error:", err);
+            toast.error(err.response?.data?.message || "Registration failed. Please try again.");
             setLoading(false); 
         }
 

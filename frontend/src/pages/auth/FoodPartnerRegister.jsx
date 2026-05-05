@@ -4,6 +4,7 @@ import "../../styles/auth-shared.css";
 import API from "../../utils/api";
 //import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import { toast } from "react-hot-toast";
 
 const FoodPartnerRegister = () => {
   const navigate = useNavigate();
@@ -30,10 +31,12 @@ const FoodPartnerRegister = () => {
     })
       .then((response) => {
         console.log(response.data);
+        toast.success("Account created successfully!");
         navigate("/create-food"); //redirect to create food page after successful registration
       })
       .catch((error) => {
         console.error("There was an error registering!", error);
+        toast.error("Registration failed. Please try again.");
         setLoading(false);
       });
   };

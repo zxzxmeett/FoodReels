@@ -2,7 +2,7 @@ import React from 'react'
 import { NavLink, useNavigate } from 'react-router-dom'
 import API from '../utils/api'
 import '../styles/bottom-nav.css'
-
+import { toast } from 'react-hot-toast';
 
 const BottomNav = () => {
 
@@ -12,8 +12,10 @@ const BottomNav = () => {
     try {
       await API.get("/api/auth/user/logout");
       navigate("/user/login");
+      toast.success("Logged out successfully!");
     } catch (err) {
       console.error("Logout failed", err);
+      toast.error("Failed to logout.");
     }
   };
 

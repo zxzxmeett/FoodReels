@@ -5,6 +5,7 @@ import '../../styles/reels.css'
 import ReelFeed from '../../components/ReelFeed'
 import SkeletonReel from '../../components/SkeletonReel';
 import { useCallback, useRef } from 'react';
+import toast from 'react-hot-toast';
 
 const Home = () => {
     const [videos, setVideos] = useState([]);
@@ -84,8 +85,10 @@ const Home = () => {
         const response = await API.post("/api/food/save", { foodId: item._id }, { withCredentials: true })
         
         if(response.data.save){
+            toast.success("Video saved successfully!");
             setVideos((prev) => prev.map((v) => v._id === item._id ? { ...v, savesCount: v.savesCount + 1 } : v))
         }else{
+            toast.error("Failed to save video.");
             setVideos((prev) => prev.map((v) => v._id === item._id ? { ...v, savesCount: v.savesCount - 1 } : v))
         }
     }

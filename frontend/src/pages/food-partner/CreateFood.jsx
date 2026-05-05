@@ -3,6 +3,7 @@ import React, { useEffect, useMemo, useRef, useState } from 'react';
 import '../../styles/create-food.css';
 import { useNavigate } from 'react-router-dom';
 import API from '../../utils/api';
+import { toast } from 'react-hot-toast';
 
 const CreateFood = () => {
     const [ name, setName ] = useState('');
@@ -62,9 +63,8 @@ const CreateFood = () => {
         })
 
         console.log(response.data);
-        navigate("/home"); // Redirect to home or another page after successful creation
-        // Optionally reset
-        // setName(''); setDescription(''); setVideoFile(null);
+        toast.success("Food item created successfully!");
+        navigate("/home");
     };
 
     const isDisabled = useMemo(() => !name.trim() || !videoFile, [ name, videoFile ]);

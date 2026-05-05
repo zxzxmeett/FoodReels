@@ -3,6 +3,7 @@ import '../../styles/auth-shared.css';
 import '../../styles/skeleton.css'; 
 import API from "../../utils/api";
 import { useNavigate, Link } from 'react-router-dom';
+import { toast } from 'react-hot-toast';
 
 const UserLogin = () => {
   const navigate = useNavigate();
@@ -12,6 +13,7 @@ const UserLogin = () => {
     e.preventDefault();
     setLoading(true); 
 
+    const toastId = toast.loading("Checking credentials...");
     const email = e.target.email.value;
     const password = e.target.password.value;
 
@@ -21,9 +23,16 @@ const UserLogin = () => {
         password
       }, { withCredentials: true });
 
+      toast.success(`Logged in successfully!`, {
+            id: toastId, 
+        });
+
       console.log(response.data);
       navigate("/home");
     } catch (err) {
+      toast.error("Invalid email or password.", {
+            id: toastId, 
+        });
       console.error("Login error:", err);
       setLoading(false); // Stop loading only if it fails so they can fix credentials
     }
