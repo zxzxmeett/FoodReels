@@ -23,11 +23,31 @@ async function createFood(req, res) {
 }
 
 async function getFoodItems(req, res) {
-    const foodItems = await foodModel.find({})
-    res.status(200).json({
-        message: "Food items fetched successfully",
-        foodItems
-    })
+    try {
+        //Done pagination for infinite scroll
+        const page = parseInt(req.query.page) || 1;
+        const limit = parseInt(req.query.limit) || 5; 
+        const skip = (page - 1) * limit;
+
+        const foodItems = await foodModel.find({})
+            .sort({ createdAt: -1 }) // Show newest reels first
+            .skip(skip)
+            .limit(limit);
+
+        const totalItems = await foodModel.countDocuments();
+
+        res.status(200).json({
+            message: "Food items fetched successfully",
+            foodItems,
+            hasMore: skip + foodItems.length < totalItems, // Boolean for Infinite Scroll
+            totalItems
+        });
+    } catch (error) {
+        res.status(500).json({
+            message: "Error fetching food items",
+            error: error.message
+        });
+    }
 }
 
 async function likeFood(req, res) {

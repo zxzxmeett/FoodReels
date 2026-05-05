@@ -4,36 +4,63 @@ import API from '../../utils/api'
 import '../../styles/reels.css'
 import ReelFeed from '../../components/ReelFeed'
 import SkeletonReel from '../../components/SkeletonReel';
+import { useCallback, useRef } from 'react';
 
 const Home = () => {
     const [videos, setVideos] = useState([]);
     const [loading, setLoading] = useState(true);
-    // Autoplay behavior is handled inside ReelFeed
+    const [page, setPage] = useState(1);
+    const [hasMore, setHasMore] = useState(true);
+    const [fetchingNext, setFetchingNext] = useState(false);
+
+    
+    const observer = useRef();
+
+    const fetchVideos = useCallback(async (pageNum) => {
+        try {
+            const response = await API.get(`/api/food?page=${pageNum}&limit=5`, { withCredentials: true });
+            const { foodItems, hasMore: moreAvailable } = response.data;
+
+            if (foodItems) {
+                //Append new videos to existing ones
+                setVideos(prev => pageNum === 1 ? foodItems : [...prev, ...foodItems]);
+                setHasMore(moreAvailable);
+            }
+            setLoading(false);
+            setFetchingNext(false);
+        } catch (err) {
+            console.error("Fetch error:", err);
+            setLoading(false);
+            setFetchingNext(false);
+        }
+    }, []);
 
     useEffect(() => {
-        API.get("/api/food", { withCredentials: true })
-            .then(response => {
-                const fetchedItems = response.data.foodItems;
-                if(fetchedItems){
-                    setVideos(fetchedItems);
-                }
-                setLoading(false);
-                console.log(response.data);
+        fetchVideos(1);
+    }, [fetchVideos]);
 
-                //setVideos(response.data.foodItems)
-            })
-            .catch(err => {
-                    console.error("Fetch error:", err);
-                    setLoading(false); 
-            });
-    }, []);
+    const lastVideoElementRef = useCallback(node => {
+        if (loading || fetchingNext) return;
+        if (observer.current) observer.current.disconnect();
+
+        observer.current = new IntersectionObserver(entries => {
+            if (entries[0].isIntersecting && hasMore) {
+                setFetchingNext(true);
+                setPage(prevPage => {
+                    const nextPage = prevPage + 1;
+                    fetchVideos(nextPage);
+                    return nextPage;
+                });
+            }
+        });
+
+        if (node) observer.current.observe(node);
+    }, [loading, fetchingNext, hasMore, fetchVideos]);
 
     if (loading) {
         return (
             <div className="reels-container">
-                <SkeletonReel />
-                <SkeletonReel />
-                <SkeletonReel />
+                {[...Array(3)].map((_, i) => <SkeletonReel key={i} />)}
             </div>
         );
     }
@@ -64,12 +91,21 @@ const Home = () => {
     }
 
     return (
+        <div className="home-wrapper">
         <ReelFeed
             items={videos}
             onLike={likeVideo}
             onSave={saveVideo}
             emptyMessage="No videos available."
+            lastItemRef={lastVideoElementRef}
         />
+
+        {fetchingNext && (
+                <div className="mini-loader">
+                    <SkeletonReel />
+                </div>
+            )}
+        </div>
     )
 }
 
