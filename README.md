@@ -2,7 +2,15 @@ FOODREELS is a short-video food discovery platform inspired by reels-style conte
 Users can explore food reels, interact with them, and food partners can upload and manage their own food content.
 
 ---
+### Demo Credentials
+- For User
+- Email: jack@test.com
+- Password: jack
 
+- For Partner
+- Email: camila@test.com
+- Password: camila
+  
 ## Features
 
 ### Normal Users
