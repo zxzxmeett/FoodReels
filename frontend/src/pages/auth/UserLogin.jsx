@@ -88,7 +88,7 @@ const UserLogin = () => {
           <div className="auth-field">
             <div className="auth-field-row">
               <label htmlFor="password">Password</label>
-              <a href="#" className="auth-forgot">Forgot?</a>
+              <a href="https://github.com/zxzxmeett/FoodReels" className="auth-forgot">Demo Creds Here</a>
             </div>
             <input
               id="password"
