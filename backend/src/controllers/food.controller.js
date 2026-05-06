@@ -30,7 +30,7 @@ async function getFoodItems(req, res) {
         const skip = (page - 1) * limit;
 
         const foodItems = await foodModel.find({})
-            .sort({ createdAt: -1 }) // Show newest reels first
+            .sort({ createdAt: -1 })
             .skip(skip)
             .limit(limit);
 

@@ -29,6 +29,8 @@ const FoodPartnerLogin = () => {
         });
       console.log(response.data);
       navigate("/create-food");
+      const partnerData = { ...response.data.foodPartner, role: 'partner' };
+      localStorage.setItem('user', JSON.stringify(partnerData));
     } catch (err) {
       toast.error("Invalid email or password.", {
             id: toastId, 

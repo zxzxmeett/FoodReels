@@ -1,11 +1,11 @@
-import React from 'react'
-import { NavLink, useNavigate } from 'react-router-dom'
-import API from '../utils/api'
-import '../styles/bottom-nav.css'
-import { toast } from 'react-hot-toast';
+import React from "react";
+import { NavLink, useNavigate } from "react-router-dom";
+import API from "../utils/api";
+import "../styles/bottom-nav.css";
+import { toast } from "react-hot-toast";
 
 const BottomNav = () => {
-
+  const loggedInUser = JSON.parse(localStorage.getItem("user"));
   const navigate = useNavigate();
 
   const handleLogout = async () => {
@@ -19,44 +19,115 @@ const BottomNav = () => {
     }
   };
 
+const handleProfileClick = (e) => {
+    e.preventDefault();
+
+    const rawData = localStorage.getItem('user');
+    if (!rawData || rawData === "undefined") return toast.error("Please login first");
+
+    try {
+        const loggedInUser = JSON.parse(rawData);
+
+        // FIX: Check for 'name' or '_id' which exists in your loggedInUser object
+        // If your User model uses 'fullName' and Partner uses 'name', this works:
+        if (loggedInUser.name || loggedInUser.contactName) {
+            navigate(`/food-partner/${loggedInUser._id}`);
+        } else {
+            toast.apply("Profiles are for Food Partners!");
+        }
+    } catch (error) {
+        console.error("Parse error", error);
+    }
+};
   return (
     <nav className="bottom-nav" role="navigation" aria-label="Bottom">
       <div className="bottom-nav__inner">
-
-        <NavLink to="/home" end className={({ isActive }) => `bottom-nav__item ${isActive ? 'is-active' : ''}`}>
+        <NavLink
+          to="/home"
+          end
+          className={({ isActive }) =>
+            `bottom-nav__item ${isActive ? "is-active" : ""}`
+          }
+        >
           <span className="bottom-nav__icon">
-            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-              <path d="M3 10.5 12 3l9 7.5"/>
-              <path d="M5 10v10a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V10"/>
+            <svg
+              width="22"
+              height="22"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2"
+            >
+              <path d="M3 10.5 12 3l9 7.5" />
+              <path d="M5 10v10a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V10" />
             </svg>
           </span>
           <span className="bottom-nav__label">Home</span>
         </NavLink>
 
-        <NavLink to="/saved" className={({ isActive }) => `bottom-nav__item ${isActive ? 'is-active' : ''}`}>
+        <NavLink
+          to="/saved"
+          className={({ isActive }) =>
+            `bottom-nav__item ${isActive ? "is-active" : ""}`
+          }
+        >
           <span className="bottom-nav__icon">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-              <path d="M6 3h12a1 1 0 0 1 1 1v17l-7-4-7 4V4a1 1 0 0 1 1-1z"/>
+            <svg
+              width="20"
+              height="20"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2"
+            >
+              <path d="M6 3h12a1 1 0 0 1 1 1v17l-7-4-7 4V4a1 1 0 0 1 1-1z" />
             </svg>
           </span>
           <span className="bottom-nav__label">Saved</span>
         </NavLink>
 
+        <div
+          className="bottom-nav__item"
+          onClick={handleProfileClick}
+          style={{ cursor: "pointer" }}
+        >
+          <span className="bottom-nav__icon">
+            <svg
+              width="22"
+              height="22"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2"
+            >
+              <circle cx="12" cy="8" r="4" />
+              <path d="M4 20c0-4 3.6-7 8-7s8 3 8 7" />
+            </svg>
+          </span>
+          <span className="bottom-nav__label">Profile</span>
+        </div>
+        
         {/* LOGOUT BUTTON */}
         <button onClick={handleLogout} className="bottom-nav__item logout-btn">
           <span className="bottom-nav__icon">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-              <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/>
-              <path d="M16 17l5-5-5-5"/>
-              <path d="M21 12H9"/>
+            <svg
+              width="20"
+              height="20"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2"
+            >
+              <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4" />
+              <path d="M16 17l5-5-5-5" />
+              <path d="M21 12H9" />
             </svg>
           </span>
           <span className="bottom-nav__label">Logout</span>
         </button>
-
       </div>
     </nav>
-  )
-}
+  );
+};
 
-export default BottomNav
+export default BottomNav;

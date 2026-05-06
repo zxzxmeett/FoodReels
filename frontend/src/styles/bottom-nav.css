@@ -3,31 +3,24 @@
 .bottom-nav {
   position: fixed;
   bottom: 0;
-  
-  width: 100%;
-  max-width: 480px;
-
   left: 50%;
   transform: translateX(-50%);
-
-  height: 56px;
-  height: var(--nav-total-height);
-  background: color-mix(in srgb, #000 35%, transparent);
-  backdrop-filter: blur(8px);
-  color: #fff;
-
-  border: 1px solid rgba(255,255,255,.15);
-  border-top: 1px solid var(--color-border);
-  
+  width: 100%;
+  max-width: 540px;
   z-index: 50;
+
+  background: #fff;
+  border-top: 1px solid #E5E5E3;
+  box-sizing: border-box;
+
+  /* iOS safe area */
+  padding-bottom: env(safe-area-inset-bottom, 0px);
 }
 
 .bottom-nav__inner {
-  max-width: 720px;
-  margin: 0 auto;
-  height: 100%;
+  height: 60px;
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(4, 1fr);
 }
 
 .bottom-nav__item {
@@ -35,34 +28,59 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  color: var(--color-text-secondary);
+  gap: 3px;
+  color: #A8A8A0;
   text-decoration: none;
-  gap: 2px;
+  position: relative;
+  -webkit-tap-highlight-color: transparent;
+  transition: color 0.15s;
 }
 
-.bottom-nav__item.is-active { color: var(--color-text); }
-
-.bottom-nav__icon { line-height: 0; }
-
-.bottom-nav__label { font-size: 12px; }
-
-/* Safe area for iOS */
-@supports(padding: max(0px)) {
-  .bottom-nav { padding-bottom: max(env(safe-area-inset-bottom), 0px); }
+/* Orange top indicator bar on active */
+.bottom-nav__item.is-active::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 20%;
+  right: 20%;
+  height: 2.5px;
+  border-radius: 0 0 3px 3px;
+  background: #F97316;
 }
+
+.bottom-nav__item.is-active {
+  color: #F97316;
+}
+
+.bottom-nav__item:active {
+  transform: scale(0.92);
+}
+
+.bottom-nav__icon {
+  line-height: 0;
+}
+
+.bottom-nav__label {
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.01em;
+}
+
+/* Logout button reset */
 .logout-btn {
   background: none;
   border: none;
   cursor: pointer;
-  color: #ffffff; /* soft red */
+  padding: 0;
+  font: inherit;
 }
 
-/* hover */
-.logout-btn:hover {
-  color: #ffffff;
-}
-
-/* active press */
 .logout-btn:active {
-  transform: scale(0.95);
+  transform: scale(0.92);
+}
+
+/* Logout gets a subtle red on press */
+.logout-btn:active .bottom-nav__icon,
+.logout-btn:active .bottom-nav__label {
+  color: #DC2626;
 }
