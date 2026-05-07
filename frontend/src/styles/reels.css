@@ -244,3 +244,8 @@
   transform: translateX(-50%);
   z-index: 30;
 }
+@media (hover: none) {
+  .reel-action:hover {
+    background: rgba(0,0,0,.35);
+  }
+}
