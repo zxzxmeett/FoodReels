@@ -113,7 +113,7 @@ const ReelFeed = ({ items = [], onLike, onSave, emptyMessage = 'No videos yet.',
                       to={"/food-partner/" + item.foodPartner}
                       aria-label="Visit store"
                     >
-                      Visit store →
+                      Visit store
                     </Link>
                   )}
                 </div>
