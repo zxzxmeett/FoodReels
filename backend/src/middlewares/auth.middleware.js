@@ -59,7 +59,52 @@ async function authUserMiddleware(req, res, next) {
     }
 }
 
+async function authAnyMiddleware(req, res, next) {
+
+    const token = req.cookies.token;
+
+    if (!token) {
+        return res.status(401).json({
+            message: "Please login first"
+        })
+    }
+
+    try {
+
+        const decoded = jwt.verify(token, process.env.JWT_SECRET);
+
+        let account = await userModel.findById(decoded.id);
+
+        let role = "user";
+
+        if (!account) {
+            account = await foodPartnerModel.findById(decoded.id);
+            role = "foodPartner";
+        }
+
+        if (!account) {
+            return res.status(401).json({
+                message: "Account not found"
+            })
+        }
+
+        req.user = account;
+        req.role = role;
+
+        next();
+
+    } catch (err) {
+
+        return res.status(401).json({
+            message: "Invalid token"
+        })
+
+    }
+
+}
+
 module.exports = {
     authFoodPartnerMiddleware,
-    authUserMiddleware
+    authUserMiddleware,
+    authAnyMiddleware
 }

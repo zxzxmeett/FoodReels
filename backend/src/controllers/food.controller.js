@@ -56,12 +56,14 @@ async function likeFood(req, res) {
 
     const isAlreadyLiked = await likeModel.findOne({
         user: user._id,
+        userModel: req.role,
         food: foodId
     })
 
     if (isAlreadyLiked) {
         await likeModel.deleteOne({
             user: user._id,
+            userModel: req.role,
             food: foodId
         })
 
@@ -76,6 +78,7 @@ async function likeFood(req, res) {
 
     const like = await likeModel.create({
         user: user._id,
+        userModel: req.role,
         food: foodId
     })
 
@@ -97,12 +100,14 @@ async function saveFood(req, res) {
 
     const isAlreadySaved = await saveModel.findOne({
         user: user._id,
+        userModel: req.role,
         food: foodId
     })
 
     if (isAlreadySaved) {
         await saveModel.deleteOne({
             user: user._id,
+            userModel: req.role,
             food: foodId
         })
 
@@ -117,6 +122,7 @@ async function saveFood(req, res) {
 
     const save = await saveModel.create({
         user: user._id,
+        userModel: req.role,
         food: foodId
     })
 
