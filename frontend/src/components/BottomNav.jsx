@@ -91,6 +91,34 @@ const BottomNav = () => {
           <span className="bottom-nav__label">Saved</span>
         </NavLink>
 
+        {/* Add Food */}
+        
+        {isPartner && (
+          <div
+            className="bottom-nav__item"
+            onClick={() => navigate("/create-food")}
+            style={{ cursor: "pointer" }}
+          >
+            <span className="bottom-nav__icon">
+              <svg
+                width="22"
+                height="22"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              >
+                <circle cx="12" cy="12" r="10" />
+                <line x1="12" y1="8" x2="12" y2="16" />
+                <line x1="8" y1="12" x2="16" y2="12" />
+              </svg>
+            </span>
+            <span className="bottom-nav__label">Add Food</span>
+          </div>
+        )}
+
         {/* Profile */}
 
         {isPartner && (

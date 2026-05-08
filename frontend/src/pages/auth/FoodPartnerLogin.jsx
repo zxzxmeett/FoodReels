@@ -28,8 +28,8 @@ const FoodPartnerLogin = () => {
 
       localStorage.setItem('user', JSON.stringify(partnerData));
       window.dispatchEvent(new Event('storage'));
-      
-      navigate("/create-food");
+      navigate("/home");
+      //navigate("/create-food");
     } catch (err) {
       toast.error("Invalid email or password.", { id: toastId });
       console.error(err);
