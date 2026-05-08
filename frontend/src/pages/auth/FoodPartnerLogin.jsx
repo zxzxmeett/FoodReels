@@ -25,7 +25,10 @@ const FoodPartnerLogin = () => {
       toast.success("Logged in successfully!", { id: toastId });
       console.log(response.data);
       const partnerData = { ...response.data.foodPartner, role: 'partner' };
+
       localStorage.setItem('user', JSON.stringify(partnerData));
+      window.dispatchEvent(new Event('storage'));
+      
       navigate("/create-food");
     } catch (err) {
       toast.error("Invalid email or password.", { id: toastId });

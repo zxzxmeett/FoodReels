@@ -25,6 +25,10 @@ const UserLogin = () => {
 
       toast.success("Logged in successfully!", { id: toastId });
       console.log(response.data);
+
+      localStorage.setItem('user', JSON.stringify({ role: 'user' }));
+      window.dispatchEvent(new Event('storage'));
+
       navigate("/home");
     } catch (err) {
       toast.error("Invalid email or password.", { id: toastId });

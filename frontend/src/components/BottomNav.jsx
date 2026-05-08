@@ -1,5 +1,5 @@
-import React from "react";
 import { NavLink, useNavigate } from "react-router-dom";
+import React, { useState, useEffect } from "react";
 import API from "../utils/api";
 import "../styles/bottom-nav.css";
 import { toast } from "react-hot-toast";
@@ -8,9 +8,24 @@ const BottomNav = () => {
   const loggedInUser = JSON.parse(localStorage.getItem("user"));
   const navigate = useNavigate();
 
+  const [isPartner, setIsPartner] = useState(false);
+
+  useEffect(() => {
+    const checkRole = () => {
+      const stored = JSON.parse(localStorage.getItem("user") || "{}");
+      setIsPartner(stored.role === "partner");
+    };
+
+    checkRole(); // run on mount
+    window.addEventListener("storage", checkRole); // run on any localStorage change
+    return () => window.removeEventListener("storage", checkRole);
+  }, []);
+
   const handleLogout = async () => {
     try {
       await API.get("/api/auth/user/logout");
+      localStorage.removeItem("user");
+      setIsPartner(false);
       navigate("/user/login");
       toast.success("Logged out successfully!");
     } catch (err) {
@@ -19,29 +34,17 @@ const BottomNav = () => {
     }
   };
 
-const handleProfileClick = (e) => {
-    e.preventDefault();
-
-    const rawData = localStorage.getItem('user');
-    if (!rawData || rawData === "undefined") return toast.error("Please login first");
-
-    try {
-        const loggedInUser = JSON.parse(rawData);
-
-        // FIX: Check for 'name' or '_id' which exists in your loggedInUser object
-        // If your User model uses 'fullName' and Partner uses 'name', this works:
-        if (loggedInUser.name || loggedInUser.contactName) {
-            navigate(`/food-partner/${loggedInUser._id}`);
-        } else {
-            toast.apply("Profiles are for Food Partners!");
-        }
-    } catch (error) {
-        console.error("Parse error", error);
+  const handleProfileClick = () => {
+    const loggedInUser = JSON.parse(localStorage.getItem("user") || "{}");
+    if (loggedInUser.role === "partner") {
+      navigate(`/food-partner/${loggedInUser._id}`);
     }
-};
+  };
   return (
     <nav className="bottom-nav" role="navigation" aria-label="Bottom">
       <div className="bottom-nav__inner">
+        {/* Home */}
+
         <NavLink
           to="/home"
           end
@@ -65,6 +68,8 @@ const handleProfileClick = (e) => {
           <span className="bottom-nav__label">Home</span>
         </NavLink>
 
+        {/* Saved */}
+
         <NavLink
           to="/saved"
           className={({ isActive }) =>
@@ -86,28 +91,33 @@ const handleProfileClick = (e) => {
           <span className="bottom-nav__label">Saved</span>
         </NavLink>
 
-        <div
-          className="bottom-nav__item"
-          onClick={handleProfileClick}
-          style={{ cursor: "pointer" }}
-        >
-          <span className="bottom-nav__icon">
-            <svg
-              width="22"
-              height="22"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="2"
-            >
-              <circle cx="12" cy="8" r="4" />
-              <path d="M4 20c0-4 3.6-7 8-7s8 3 8 7" />
-            </svg>
-          </span>
-          <span className="bottom-nav__label">Profile</span>
-        </div>
-        
+        {/* Profile */}
+
+        {isPartner && (
+          <div
+            className="bottom-nav__item"
+            onClick={handleProfileClick}
+            style={{ cursor: "pointer" }}
+          >
+            <span className="bottom-nav__icon">
+              <svg
+                width="22"
+                height="22"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2"
+              >
+                <circle cx="12" cy="8" r="4" />
+                <path d="M4 20c0-4 3.6-7 8-7s8 3 8 7" />
+              </svg>
+            </span>
+            <span className="bottom-nav__label">Profile</span>
+          </div>
+        )}
+
         {/* LOGOUT BUTTON */}
+
         <button onClick={handleLogout} className="bottom-nav__item logout-btn">
           <span className="bottom-nav__icon">
             <svg
