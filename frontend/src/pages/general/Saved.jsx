@@ -13,7 +13,9 @@ const Saved = () => {
     useEffect(() => {
         API.get("/api/food/save", { withCredentials: true })
             .then(response => {
-                const savedFoods = response.data.savedFoods.map((item) => ({
+                const savedFoods = response.data.savedFoods
+                    .filter(item => item.food !== null && item.food !== undefined)
+                    .map((item) => ({
                     _id: item.food._id,
                     video: item.food.video,
                     description: item.food.description,
